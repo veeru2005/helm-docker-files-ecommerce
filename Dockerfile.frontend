@@ -6,7 +6,8 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
 # Clone only latest commit
-RUN git clone --depth 1 https://github.com/veeru2005/docker-compose-frontend-skill11.git .
+# Clones the repo OR pulls updates if it already exists
+RUN git clone --depth 1 https://github.com/veeru2005/docker-compose-frontend-skill11.git . || (cd /app && git pull origin main)
 
 RUN npm ci --no-audit --progress=false
 RUN npm run build
